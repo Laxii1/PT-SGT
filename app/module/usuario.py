@@ -12,7 +12,7 @@ def ingresar_usuario():#Función para ingresar usuarios nuevos al sistema
     apellido=request.json['apellido']
     password = request.json['password']
     email = request.json['email']
-    
+
     
     tipo=2  #Usuario normal    
     if db.db.session.query(db.SDGT_Usuario).filter(db.SDGT_Usuario.usr_email==email).first() == None : #Consulta para saber si el email ingresado ya está en uso
@@ -21,7 +21,7 @@ def ingresar_usuario():#Función para ingresar usuarios nuevos al sistema
         else:
             max_id_usr = db.db.session.query(func.max(db.SDGT_Usuario.usr_id)).scalar() + 1
 
-        usuario_nuevo= db.SDGT_Usuario(max_id_usr,nombre,apellido,password, email, tipo) #Se crea la tupla con todos los datos necesarios
+        usuario_nuevo= db.SDGT_Usuario(max_id_usr,nombre,apellido,email,password , tipo) #Se crea la tupla con todos los datos necesarios
         db.db.session.add(usuario_nuevo)#Se guarda la nueva tupla
         db.db.session.commit()  #Se confirman los cambios
         return jsonify({'message': 'Usuario registrado exitosamente'}),201 #Se retorna el código HTTP de solicitud exitosa
